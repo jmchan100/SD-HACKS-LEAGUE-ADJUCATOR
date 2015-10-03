@@ -101,7 +101,7 @@ class RitoPls:
 				try:
 					matchDict[str(match.matchId)]
 				except KeyError:
-					matchFile.write(str(match.matchId))
+					matchFile.write(str(match.matchId) + '\n')
 					matchDict[str(match.matchId)] = 1
 
 			time.sleep(1)
