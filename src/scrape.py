@@ -192,7 +192,7 @@ class RitoPls:
 		if(r.status_code != 200):
 			print r.status_code
 			print r.content
-			break
+			return
 
 		data = r.content
 
@@ -254,8 +254,8 @@ jsonifier = Jsonifier()
 
 
 #rito.scrapeChallenger('euw')							# need to modify code depending on region
-rito.scrapeMatchIdsFromSummoners('euwchallenger.txt')
-#rito.scrapeMatchData('matches_nachallenger.txt', 0, 500)
+#rito.scrapeMatchIdsFromSummoners('euwchallenger.txt')
+rito.scrapeMatchData('matches_nachallenger.txt', 500, 1000)
 
 #x = json.loads(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
 #print x
