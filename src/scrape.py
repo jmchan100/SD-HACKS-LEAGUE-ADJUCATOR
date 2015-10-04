@@ -119,7 +119,7 @@ class RitoPls:
 		matches = open('../res/matches.txt', 'a')
 
 		for matchId in matchList[start:end]:
-			region = filename[8:10]		# FIRST TWO CHAR FOR REGION AFTER OMITTING MATCHES_
+			region = filename[8:11]		# FIRST TWO CHAR FOR REGION AFTER OMITTING MATCHES_
 			url = 'https://'+region+'.api.pvp.net/api/lol/'+region+'/v2.2/match/'+matchId[:-1]+'?api_key='
 			url += self.apikey
 
@@ -236,7 +236,7 @@ class RitoPls:
 		f = open(filename, 'r')
 		data = f.read()
 		f.close()
-		
+
 		x = json2obj(data)
 
 		match = []
@@ -295,7 +295,7 @@ jsonifier = Jsonifier()
 
 #rito.scrapeChallenger('euw')							# need to modify code depending on region
 #rito.scrapeMatchIdsFromSummoners('euwchallenger.txt')
-rito.scrapeMatchData('matches_nachallenger.txt', 500, 1000)
+rito.scrapeMatchData('matches_euwchallenger.txt', 0, 500)
 
 #x = json.loads(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
 #print x
