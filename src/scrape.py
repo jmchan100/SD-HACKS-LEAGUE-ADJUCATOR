@@ -232,6 +232,46 @@ class RitoPls:
 		finalRes = (match,res)
 		return finalRes
 
+	def parseMatchByFile(self,filename):
+		f = open(filename, 'r')
+		data = f.read()
+		f.close()
+		
+		x = json2obj(data)
+
+		match = []
+		res = []
+		part = []
+		for p in x.participants:
+			partVals = []
+			partVals.append(p.teamId)
+			partVals.append(p.championId)
+			# for m in p.masteries:
+			# 	partVals.append(m.rank)
+			# 	partVals.append(m.masteryId)
+			# for r in p.runes:
+			# 	partVals.append(r.rank)
+			# 	partVals.append(r.runeId)
+			partVals.append(p.spell1Id^p.spell2Id)
+			part.append(partVals)
+
+		if x.participants[0].teamId == 100 and x.participants[0].stats.winner == True:
+			res.append(1)
+		else:
+			res.append(0)
+
+		team1 = [player for player in part if player[0] == 100]
+		team2 = [player for player in part if player[0] == 200]
+
+		team1.sort(key=lambda champ: champ[1])
+		team2.sort(key=lambda champ: champ[1])
+
+		match = [item for sublist in team1 for item in sublist]
+		tmpMatch = [item for sublist in team2 for item in sublist]
+		match.extend(tmpMatch)
+
+		finalRes = (match,res)
+		return finalRes
 
 
 class Jsonifier:
