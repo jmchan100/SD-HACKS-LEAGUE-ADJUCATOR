@@ -1,6 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model, datasets
+import scrape
+
+def load_data(filename):
+    f = open(filename)
+
+    X = []
+    Y = []
+
+    for line in f:
+        
+        tmp = line.split(';')
+	tmp2 = tmp[0].split('[')[1].split(']')[0].split(',')
+        tmpVals = []
+	counter = 0
+	for val in tmp2:
+            if counter%3 != 1:
+	        counter += 1
+	        continue
+            tmpVals.append(int(val))
+	    counter += 1
+	X.append(tmpVals)
+	Y.append(tmp[1][1])
+
+    return X,Y
 
 # import some data to play with
 iris = datasets.load_iris()
@@ -11,14 +35,18 @@ h = .02  # step size in the mesh
 
 logreg = linear_model.LogisticRegression(C=1e5)
 
-X = [[123,321,124,421,555,678,547,346,275,756],[555,666,444,777,222,678,547,346,275,756]]
-Y = [1,0]
+rito = RitoPls()
+x = rito.scrapeByMatchId('na', 1966959961)[0]
+
+X,Y = load_data('../res/matches.txt')
 
 # we create an instance of Neighbours Classifier and fit the data.
 logreg.fit(X, Y)
 
-Z = logreg.predict([123,321,124,421,555,678,547,346,275,756])
-print Z
+Z = logreg.predict([[41, 80, 104, 111, 223, 1, 11, 40, 59, 96]])
+ZZ = logreg.predict_proba([[41, 80, 104, 111, 223, 1, 11, 40, 59, 96]])
+#print Z
+print ZZ[0][0]
 
 '''
 # Plot the decision boundary. For that, we will assign a color to each
